@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIV x NBA: Demo Production Plan</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.umd.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Define custom NBA colors for Tailwind */
+        .bg-nba-blue { background-color: #1D428A; }
+        .text-nba-blue { color: #1D428A; }
+        .border-nba-blue { border-color: #1D428A; }
+        .bg-nba-red { background-color: #CE1141; }
+        .text-nba-red { color: #CE1141; }
+        .border-nba-red { border-color: #CE1141; }
+        
+        .font-heading {
+            font-family: 'Teko', sans-serif;
+            font-weight: 600;
+        }
+
+        .giant-text {
+            font-size: clamp(6rem, 20vw, 18rem);
+            line-height: 0.8;
+        }
+        
+        .medium-giant-text {
+            font-size: clamp(4rem, 15vw, 12rem);
+            line-height: 0.8;
+        }
+
+        .highlight-text-blue {
+             background: linear-gradient(180deg, rgba(29, 66, 138, 0.8) 0%, rgba(29, 66, 138, 0) 100%);
+             -webkit-background-clip: text;
+             -webkit-text-fill-color: transparent;
+             color: transparent;
+        }
+        
+        .highlight-text-red {
+             background: linear-gradient(180deg, rgba(206, 17, 65, 0.8) 0%, rgba(206, 17, 65, 0) 100%);
+             -webkit-background-clip: text;
+             -webkit-text-fill-color: transparent;
+             color: transparent;
+        }
+
+        .table-header {
+            @apply px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-heading;
+        }
+
+        .table-cell {
+            @apply px-4 py-4 text-sm text-gray-700;
+        }
+        
+        .storyboard-card {
+             @apply bg-white border border-gray-200 rounded-lg shadow-lg mb-6 overflow-hidden;
+        }
+        .storyboard-header {
+            @apply p-4 bg-gray-50 border-b border-gray-200;
+        }
+        .storyboard-body {
+            @apply p-4 grid grid-cols-1 md:grid-cols-3 gap-4;
+        }
+        .storyboard-body > div {
+            @apply pb-2;
+        }
+        .storyboard-body strong {
+            @apply font-heading text-lg text-nba-blue;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            section {
+                display: block !important;
+                position: static !important;
+                min-height: auto !important;
+                height: auto !important;
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+                overflow: visible !important;
+                page-break-inside: avoid;
+                page-break-after: always;
+            }
+            section:last-of-type, footer { page-break-after: auto; }
+            section > div { display: block !important; position: static !important; width: 100% !important; max-width: 100% !important; }
+            motion\.div, div[data-motion-id] { opacity: 1 !important; transform: none !important; animation: none !important; position: static !important; }
+            .print-hidden { display: none !important; }
+            .giant-text { font-size: 6rem !important; line-height: 1 !important; }
+            .medium-giant-text { font-size: 4rem !important; line-height: 1 !important; }
+            img { max-width: 100% !important; height: auto !important; }
+            .grid { display: block !important; }
+            table, tr, td, th, .storyboard-card { page-break-inside: avoid !important; }
+            .storyboard-body { display: block !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="app">
+        <!-- Hero Section -->
+        <section class="h-screen w-full flex flex-col justify-center items-center text-center p-4 overflow-hidden">
+            <motion.div class="absolute top-8 right-8" :initial="{ opacity: 0 }" :animate="{ opacity: 1 }" :transition="{ duration: 1, delay: 0.5 }">
+                <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto">
+            </motion.div>
+            <motion.div :initial="{ opacity: 0, y: 50 }" :animate="{ opacity: 1, y: 0 }" :transition="{ duration: 0.8 }">
+                <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl tracking-tighter">ALIV x NBA</h1>
+                <p class="mt-4 text-2xl md:text-4xl text-gray-600 font-heading max-w-4xl mx-auto">
+                    Demo Production Plan & Go-to-Market Strategy
+                </p>
+            </motion.div>
+             <motion.div class="absolute bottom-10 text-gray-500 text-sm print-hidden" :initial="{ opacity: 0}" :animate="{ opacity: 1 }" :transition="{ duration: 1, delay: 1 }">
+                <i class="fas fa-arrow-down mr-2 animate-bounce"></i> Scroll to explore
+            </motion.div>
+        </section>
+        
+        <!-- Section 1: Go-to-Market Strategy -->
+        <section class="relative min-h-screen py-24 px-4 bg-gray-50">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+            <div class="max-w-7xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">Go-to-Market Strategy</h2>
+                    <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">Two distinct strategies to pitch, based on client readiness.</p>
+                </motion.div>
+
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Scheme A -->
+                    <motion.div class="p-8 bg-white rounded-2xl border shadow-lg" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.1 }">
+                        <div class="text-6xl text-nba-blue mb-4"><i class="fas fa-layer-group"></i></div>
+                        <h3 class="font-heading text-3xl">Scheme A: The "All-in-One"</h3>
+                        <p class="text-lg font-bold text-gray-700">Native League Pass Integration</p>
+                        <p class="text-gray-600 mt-4"><span class="font-bold">Target:</span> NBA League Executives, League Pass Product Heads.</p>
+                        <p class="text-gray-600 mt-2"><span class="font-bold">Core Pitch:</span> "Add a new, high-profit interactive revenue module to your existing D2C platform. Seamless experience, maximum ARPU."</p>
+                        <p class="text-gray-600 mt-2"><span class="font-bold">Demo Focus:</span>
+                            <ul class="list-disc list-inside mt-2 text-gray-600">
+                                <li>Simulate the League Pass UI perfectly.</li>
+                                <li>Show the ALIV layer as a seamless overlay.</li>
+                                <li>Highlight in-app virtual good purchases.</li>
+                            </ul>
+                        </p>
+                    </motion.div>
+                    <!-- Scheme B -->
+                    <motion.div class="p-8 bg-white rounded-2xl border-2 border-nba-red shadow-2xl" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.2 }">
+                        <div class="text-6xl text-nba-red mb-4"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="font-heading text-3xl">Scheme B: The "Second Screen"</h3>
+                        <p class="text-lg font-bold text-gray-700">Dedicated Team App (Recommended)</p>
+                        <p class="text-gray-600 mt-4"><span class="font-bold">Target:</span> Individual Team CMOs, Digital Product Depts.</p>
+                        <p class="text-gray-600 mt-2"><span class="font-bold">Core Pitch:</span> "93% of Gen Z is on a second screen. We build your team's 'Digital Arena' App, powered by our Cloud AI that syncs to *any* broadcast (TNT, ESPN), turning lost attention into your team's direct revenue."</p>
+                        <p class="text-gray-600 mt-2"><span class="font-bold">Demo Focus:</span>
+                            <ul class="list-disc list-inside mt-2 text-gray-600">
+                                <li>Show a standalone, team-branded app.</li>
+                                <li>Show TV in background, app in foreground.</li>
+                                <li>Demonstrate **"Cloud Real-time Sync"**: TV audio triggers instant poll on the phone.</li>
+                            </ul>
+                        </p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Demo Video Storyboard A -->
+        <section class="relative min-h-screen py-24 px-4">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+            <div class="max-w-7xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">Demo Storyboard: Scheme A</h2>
+                    <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">"All-in-One" Experience (League Pass Native Integration)</p>
+                </motion.div>
+
+                <div class="mt-20 max-w-5xl mx-auto space-y-4">
+                    
+                    <!-- Scene 1 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 01: The Problem (0:00 - 0:15)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:00 - 0:08</p></div>
+                            <div><strong>Visual (iPhone 16 - League Pass UI)</strong><p>Fan is watching Warriors vs. Lakers on League Pass. A timeout is called.</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music) "A 150-minute NBA broadcast has nearly 90 minutes of 'dead-time'. This is the traditional broadcast's 'Attention Lull'..."</p></div>
+                            <div><strong>SFX/UI</strong><p>Whistle SFX.</p></div>
+                            
+                            <div><strong>Time</strong><p>0:09 - 0:15</p></div>
+                            <div><strong>Visual</strong><p>Fan gets bored of the timeout analysis, **swipes out of the app**, and opens Instagram to scroll Reels.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"...and it's the exact moment 93% of Gen Z fans are lost to the second screen."</p></div>
+                            <div><strong>SFX/UI</strong><p>UI Swipe SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:16 - 0:20</p></div>
+                            <div><strong>Visual</strong><p>Fullscreen Text Graphic: "HOW DO WE RECAPTURE THAT ATTENTION?"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music swells)</p></div>
+                            <div><strong>SFX/UI</strong><p>Whoosh SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 2 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 02: The Solution (0:21 - 0:48)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:21 - 0:30</p></div>
+                            <div><strong>Visual (iPhone 16 - League Pass UI)</strong><p>Fan swipes back to League Pass. A new "Interactive Mode" toggle with the ALIV logo appears. Fan taps it.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Introducing the ALIV Solution, integrated directly into League Pass. An AI-powered layer to turn 'passive viewing' into 'active influencing'."</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:31 - 0:38</p></div>
+                            <div><strong>Visual</strong><p>A transparent interactive UI fades in over the video. The fan's 3D AI Avatar (Fan AI Agent) appears in the corner in a default jersey.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"The AI Co-Host is now active."</p></div>
+                            <div><strong>SFX/UI</strong><p>Confirm chime SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:39 - 0:48</p></div>
+                            <div><strong>Visual</strong><p>Pillar 2 (Func 2.1): Fan taps their Avatar > "Locker Room". A **League Pass native store page** opens. Fan buys a "$4.99" virtual jersey. Avatar updates instantly.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"First, we give fans an identity. Purchase officially licensed virtual jerseys and gear, and show your allegiance."</p></div>
+                            <div><strong>SFX/UI</strong><p>Cha-ching SFX. Equip SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 3 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 03: Pillar 1 - Interactive Engine (0:49 - 1:25)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:49 - 0:58</p></div>
+                            <div><strong>Visual (iPhone 16 - League Pass UI)</strong><p>Curry hits a deep 3. Commentator: "BANG! WHAT A SHOT!" An AI card **slides up from the bottom**, video remains playing.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Our AI Co-Host listens for commentator emotion and keywords, turning broadcast hype into instant interaction."</p></div>
+                            <div><strong>SFX/UI</strong><p>Swish SFX. Crowd cheer. UI Swoosh SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:59 - 1:05</p></div>
+                            <div><strong>Visual</strong><p>AI Card: "🔥 **LEGENDARY SHOT!** 🔥 Rate this play (1-5 Stars)?" Fan taps "⭐⭐⭐⭐⭐".</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX. Star fill SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:06 - 1:20</p></div>
+                            <div><strong>Visual</strong><p>LeBron at the free-throw line (clutch moment). A new AI card slides up: "🚨 **CLUTCH FREE THROW** 🚨 (Score: 110-111, 0:45 left). Will LeBron make BOTH?"</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Using real-time game data, we target every 'golden window', turning passive viewing into an active, predictive game."</p></div>
+                            <div><strong>SFX/UI</strong><p>Heartbeat SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:21 - 1:25</p></div>
+                            <div><strong>Visual</strong><p>Fan taps "✅ YES". LeBron makes both. Card flashes: "🎉 **CORRECT!** +200 Team Points!"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Cheer SFX. Points chime SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 4 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 04: Pillar 2 - Monetization (1:26 - 2:02)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>1:26 - 1:32</p></div>
+                            <div><strong>Visual (iPhone 16 - League Pass UI)</strong><p>Halftime. Video stream shrinks to a corner. ALIV UI takes over the main screen: "Welcome to the Halftime Hype Battle."</p></div>
+                            <div><strong>Audio (VO)</strong><p>"This is the biggest attention lull. For ALIV, it's the biggest revenue opportunity. Welcome to the Halftime Hype Battle."</p></div>
+                            <div><strong>SFX/UI</strong><p>Buzzer SFX. PK Music starts.</p></div>
+
+                            <div><strong>Time</strong><p>1:33 - 1:40</p></div>
+                            <div><strong>Visual</strong><p>"⚔️ **HALFTIME HYPE BATTLE: WARRIORS vs LAKERS** ⚔️" Two large Hype Meters appear. Warriors (45%) are losing to Lakers (55%).</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Fans now have a chance to directly support their team... and compete against their rivals."</p></div>
+                            <div><strong>SFX/UI</strong><p>(No SFX)</p></div>
+
+                            <div><strong>Time</strong><p>1:41 - 1:48</p></div>
+                            <div><strong>Visual</strong><p>Fan (Warriors) taps "BOOST WARRIORS!". A **League Pass native in-app purchase** modal appears. "Buy Team Tokens".</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Using 'Team Tokens', fans fuel their team's Hype Meter in real-time."</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:49 - 1:55</p></div>
+                            <div><strong>Visual</strong><p>Fan buys "$4.99" pack via Apple Pay. Fan taps "BOOST!" repeatedly. Warriors' Hype Meter surges to 58%, overtaking the Lakers'.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Every purchase, every tap, is a visible, immediate contribution to their team's glory."</p></div>
+                            <div><strong>SFX/UI</strong><p>Cha-ching SFX. Token SFX. Meter fill SFX. Victory SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:56 - 2:02</p></div>
+                            <div><strong>Visual</strong><p>Warriors Logo glows, "HALFTIME WINNERS: WARRIORS FANS!". A "TOP SUPPORTERS" leaderboard slides in. The fan's Avatar (with $4.99 jersey) is at #3.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Driving new revenue for the team, and delivering priceless status for the fan."</p></div>
+                            <div><strong>SFX/UI</strong><p>(No SFX)</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 5 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 05: Value Proposition (2:03 - 2:15)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>2:03 - 2:10</p></div>
+                            <div><strong>Visual</strong><p>Fast montage of all features: payment, hype meter, avatar, polls. Fullscreen Text: "+150% GEN Z WATCH TIME", "+40% DEAD-TIME UTILIZATION", "NEW VIRTUAL GOODS REVENUE"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music peaks) "ALIV. We turn the 90-minute lull... into your golden revenue window."</p></div>
+                            <div><strong>SFX/UI</strong><p>Fast whoosh SFX.</p></div>
+
+                            <div><strong>Time</strong><p>2:11 - 2:15</p></div>
+                            <div><strong>Visual</strong><p>Final slate: ALIV Logo + NBA Logo. "The New Court. The New Revenue."</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Final sting SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Demo Video Storyboard B -->
+        <section class="relative min-h-screen py-24 px-4 bg-gray-50">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+            <div class="max-w-7xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">Demo Storyboard: Scheme B</h2>
+                    <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">"Second Screen" App (Recommended)</p>
+                </motion.div>
+
+                <div class="mt-20 max-w-5xl mx-auto space-y-4">
+                    
+                    <!-- Scene 1 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 01: The Problem (0:00 - 0:15)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:00 - 0:08</p></div>
+                            <div><strong>Visual (TV + iPhone 16)</strong><p>TV shows Warriors vs. Lakers. A timeout is called. On the phone, a fan opens Instagram and starts scrolling Reels.</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music) "A 150-minute NBA broadcast has nearly 90 minutes of 'dead-time'. This is the traditional broadcast's 'Attention Lull'..."</p></div>
+                            <div><strong>SFX/UI</strong><p>Whistle SFX. UI Swipe SFX.</p></div>
+                            
+                            <div><strong>Time</strong><p>0:09 - 0:15</p></div>
+                            <div><strong>Visual</strong><p>Fan continues scrolling Instagram, TV is out of focus in the background.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"...and it's the exact moment 93% of Gen Z fans are lost to the second screen."</p></div>
+                            <div><strong>SFX/UI</strong><p>(No SFX)</p></div>
+
+                            <div><strong>Time</strong><p>0:16 - 0:20</p></div>
+                            <div><strong>Visual</strong><p>Fullscreen Text Graphic: "HOW DO WE WIN BACK THE 90 MINUTES?"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music swells)</p></div>
+                            <div><strong>SFX/UI</strong><p>Whoosh SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 2 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 02: The Solution (0:21 - 0:48)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:21 - 0:30</p></div>
+                            <div><strong>Visual (iPhone 16)</strong><p>Fan opens a new app: "Warriors Hype Hub" (team logo + ALIV logo). Fan taps "SYNC TO LIVE GAME".</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Introducing the ALIV solution. A team-branded 'Digital Arena' that syncs perfectly with any broadcast."</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:31 - 0:38</p></div>
+                            <div><strong>Visual</strong><p>App UI: "SELECT BROADCAST". Fan chooses "TNT". A radar animation appears, then: "✅ SYNCED TO TNT VIA ALIV CLOUD".</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Our Cloud AI is already analyzing the official broadcast. No microphones, zero latency. You are now perfectly in sync."</p></div>
+                            <div><strong>SFX/UI</strong><p>Confirm chime SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:39 - 0:48</p></div>
+                            <div><strong>Visual</strong><p>Pillar 2 (Func 2.1): Fan enters the app's "Locker Room" (Store). Buys "$4.99" virtual jersey. Their 3D Avatar (Fan AI Agent) updates instantly.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"First, we give fans an identity. Purchase officially licensed virtual jerseys and gear, and show your allegiance."</p></div>
+                            <div><strong>SFX/UI</strong><p>Cha-ching SFX. Equip SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 3 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 03: Pillar 1 - Interactive Engine (0:49 - 1:25)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>0:49 - 0:58</p></div>
+                            <div><strong>Visual (Split Screen)</strong><p>LEFT (TV): Curry hits a deep 3. Commentator: "BANG! WHAT A SHOT!" <br> RIGHT (Phone): **Instantly (zero-latency)**, an AI card slides into the app.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Our AI Co-Host listens for commentator emotion and keywords, turning broadcast hype into instant interaction."</p></div>
+                            <div><strong>SFX/UI</strong><p>Swish SFX. Crowd cheer. UI Swoosh SFX.</p></div>
+
+                            <div><strong>Time</strong><p>0:59 - 1:05</p></div>
+                            <div><strong>Visual</strong><p>AI Card: "🔥 **LEGENDARY SHOT!** 🔥 Rate this play (1-5 Stars)?" Fan taps "⭐⭐⭐⭐⭐".</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX. Star fill SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:06 - 1:20</p></div>
+                            <div><strong>Visual</strong><p>TV shows LeBron at the free-throw line (clutch moment). Phone app instantly shows a new card: "🚨 **CLUTCH FREE THROW** 🚨 (Score: 110-111, 0:45 left). Will LeBron make BOTH?"</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Using real-time game data, we target every 'golden window', turning passive viewing into an active, predictive game."</p></div>
+                            <div><strong>SFX/UI</strong><p>Heartbeat SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:21 - 1:25</p></div>
+                            <div><strong>Visual</strong><p>Fan taps "✅ YES". On TV, LeBron makes both. Phone flashes: "🎉 **CORRECT!** +200 Team Points!"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Cheer SFX. Points chime SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 4 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 04: Pillar 2 - Monetization (1:26 - 2:02)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>1:26 - 1:32</p></div>
+                            <div><strong>Visual (TV + Phone)</strong><p>Halftime. TV shows ads. Phone app pops a fullscreen invite: "Welcome to the Halftime Hype Battle."</p></div>
+                            <div><strong>Audio (VO)</strong><p>"This is the biggest attention lull. For ALIV, it's the biggest revenue opportunity. Welcome to the Halftime Hype Battle."</p></div>
+                            <div><strong>SFX/UI</strong><p>Buzzer SFX. PK Music starts.</p></div>
+
+                            <div><strong>Time</strong><p>1:33 - 1:40</p></div>
+                            <div><strong>Visual</strong><p>"⚔️ **HALFTIME HYPE BATTLE: WARRIORS vs LAKERS** ⚔️" Two large Hype Meters appear. Warriors (45%) are losing to Lakers (55%).</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Fans now have a chance to directly support their team... and compete against their rivals."</p></div>
+                            <div><strong>SFX/UI</strong><p>(No SFX)</p></div>
+
+                            <div><strong>Time</strong><p>1:41 - 1:48</p></div>
+                            <div><strong>Visual</strong><p>Fan (Warriors) taps "BOOST WARRIORS!". The app's store modal appears: "Buy Team Tokens".</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Using 'Team Tokens', fans fuel their team's Hype Meter in real-time."</p></div>
+                            <div><strong>SFX/UI</strong><p>Click SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:49 - 1:55</p></div>
+                            <div><strong>Visual</strong><p>Fan buys "$4.99" pack via Apple Pay. Fan taps "BOOST!" repeatedly. Warriors' Hype Meter surges to 58%, overtaking the Lakers'.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Every purchase, every tap, is a visible, immediate contribution to their team's glory."</p></div>
+                            <div><strong>SFX/UI</strong><p>Cha-ching SFX. Token SFX. Meter fill SFX. Victory SFX.</p></div>
+
+                            <div><strong>Time</strong><p>1:56 - 2:02</p></div>
+                            <div><strong>Visual</strong><p>Warriors Logo glows, "HALFTIME WINNERS: WARRIORS FANS!". A "TOP SUPPORTERS" leaderboard slides in. The fan's Avatar (with $4.99 jersey) is at #3.</p></div>
+                            <div><strong>Audio (VO)</strong><p>"Driving new revenue for the team, and delivering priceless status for the fan."</p></div>
+                            <div><strong>SFX/UI</strong><p>(No SFX)</p></div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Scene 5 -->
+                    <motion.div class="storyboard-card" :initial="{ opacity: 0, x: -50 }" :while-in-view="{ opacity: 1, x: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5 }">
+                        <div class="storyboard-header">
+                            <h4 class="font-heading text-2xl">Scene 05: Value Proposition (2:03 - 2:15)</h4>
+                        </div>
+                        <div class="storyboard-body">
+                            <div><strong>Time</strong><p>2:03 - 2:10</p></div>
+                            <div><strong>Visual</strong><p>Fast montage of all features: payment, hype meter, avatar, polls. Fullscreen Text: "+150% GEN Z WATCH TIME", "+40% DEAD-TIME UTILIZATION", "NEW VIRTUAL GOODS REVENUE"</p></div>
+                            <div><strong>Audio (VO)</strong><p>(Music peaks) "ALIV. We turn the 90-minute lull... into your golden revenue window."</p></div>
+                            <div><strong>SFX/UI</strong><p>Fast whoosh SFX.</p></div>
+
+                            <div><strong>Time</strong><p>2:11 - 2:15</p></div>
+                            <div><strong>Visual</strong><p>Final slate: ALIV Logo + Warriors Logo. "The New Court. The New Revenue."</p></div>
+                            <div><strong>Audio (VO)</strong><p>(No VO)</p></div>
+                            <div><strong>SFX/UI</strong><p>Final sting SFX.</p></div>
+                        </div>
+                    </motion.div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Core AI Engine -->
+        <section class="relative min-h-screen py-24 px-4 bg-gray-50">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+             <div class="max-w-7xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">Core Tech: The ALIV Cloud</h2>
+                    <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">Our advantage is **Cloud-Sync**. All analysis happens on our servers, pushing instant, perfectly-synced interactions to all fans regardless of their broadcast source.</p>
+                </motion.div>
+
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    <!-- Input 1 -->
+                    <motion.div class="p-8 text-center" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.1 }">
+                        <div class="text-6xl text-nba-blue mb-4"><i class="fas fa-database"></i></div>
+                        <h3 class="font-heading text-3xl">Game Data API</h3>
+                        <p class="text-gray-600 mt-2">**The "Skeleton"**: Real-time data (clock, score, status) from Sportradar is our primary trigger for all nodes.</p>
+                    </motion.div>
+                    <!-- Input 2 -->
+                    <motion.div class="p-8 text-center" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.2 }">
+                        <div class="text-6xl text-nba-red mb-4"><i class="fas fa-microphone-alt"></i></div>
+                        <h3 class="font-heading text-3xl">Audio Stream</h3>
+                        <p class="text-gray-600 mt-2">**The "Soul"**: Our Cloud AI ingests the broadcast audio (TNT, ESPN), using NLP to catch commentator emotion and keywords.</p>
+                    </motion.div>
+                    <!-- Input 3 -->
+                    <motion.div class="p-8 text-center" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.3 }">
+                        <div class="text-6xl text-gray-500 mb-4"><i class="fas fa-video"></i></div>
+                        <h3 class="font-heading text-3xl">Video Stream (CV)</h3>
+                        <p class="text-gray-600 mt-2">**The "Validation"**: Our Cloud CV engine cross-validates audio/data triggers (e.g., confirms a dunk) and provides a backup sync mechanism.</p>
+                    </motion.div>
+                    <!-- Input 4 -->
+                    <motion.div class="p-8 text-center" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.4 }">
+                        <div class="text-6xl text-yellow-500 mb-4"><i class="fas fa-comments"></i></div>
+                        <h3 class="font-heading text-3xl">Audience Chat</h3>
+                        <p class="text-gray-600 mt-2">**The "Pulse"**: The AI reads the room, analyzing chat velocity and hot topics to trigger relevant polls (e.g., "Bad call by the ref?").</p>
+                    </motion.div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Section 5: Trigger Nodes -->
+        <section class="relative py-24 px-4">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center">
+                    <motion.h2 class="font-heading text-5xl md:text-7xl"
+                        :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                        The Golden Windows: Interaction Triggers
+                    </motion.h2>
+                    <motion.p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto"
+                        :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6, delay: 0.2 }">
+                        We strategically target "dead-time" to create engagement without disrupting the core viewing experience.
+                    </motion.p>
+                </div>
+                
+                <div class="mt-16 flex justify-center">
+                    <motion.div class="w-full max-w-6xl overflow-x-auto" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.2 }" :transition="{ duration: 0.8 }">
+                        <table class="min-w-full divide-y divide-gray-200 border">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th scope="col" class="table-header">Trigger Node</th>
+                                    <th scope="col" class="table-header">Trigger Standard (from AI Cloud)</th>
+                                    <th scope="col" class="table-header">Demo Feature</th>
+                                    <th scope="col" class="table-header">Fan Experience (Why it matters)</th>
+                                    <th scope="col" class="table-header text-right">Commercial?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="table-cell font-bold">Timeout</td>
+                                    <td class="table-cell">`Game_Status` changes to `Timeout`</td>
+                                    <td class="table-cell">Func 1.2 (Predictive Quiz)</td>
+                                    <td class="table-cell">"I have something to do, I'll take a guess." (Fills the void)</td>
+                                    <td class="table-cell text-right text-nba-red font-bold">No</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="table-cell font-bold">Clutch Free Throw</td>
+                                    <td class="table-cell">`Game_Status` = `FreeThrow` + `Clock` &lt; 2:00 + `Score Diff` &lt;= 5</td>
+                                    <td class="table-cell">Func 1.2 (Predict "Make Both?")</td>
+                                    <td class="table-cell">"This is tense! I bet he makes it!" (Amplifies tension)</td>
+                                    <td class="table-cell text-right text-nba-red font-bold">No</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="table-cell font-bold">Highlight Play</td>
+                                    <td class="table-cell">Audio NLP: Emotion &gt; 90% + Keyword ("Dunk!")</td>
+                                    <td class="table-cell">Func 1.1 (Instant Poll: "Rate it!")</td>
+                                    <td class="table-cell">"That was sick! 5 stars!" (Instant emotional release)</td>
+                                    <td class="table-cell text-right text-nba-red font-bold">No</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="table-cell font-bold">Controversial Call</td>
+                                    <td class="table-cell">Audience Chat: (Keywords "Ref", "Foul") + (Negative Sentiment &gt; 70%)</td>
+                                    <td class="table-cell">Func 1.1 (Sentiment Poll)</td>
+                                    <td class="table-cell">"I knew it was a bad call! Everyone agrees!" (Finds consensus)</td>
+                                    <td class="table-cell text-right text-nba-red font-bold">No</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 bg-green-50">
+                                    <td class="table-cell font-bold text-nba-blue">Quarter Break</td>
+                                    <td class="table-cell">`Game_Status` = `QuarterBreak`</td>
+                                    <td class="table-cell">Func 2.2 (3-Min Hype Battle)</td>
+                                    <td class="table-cell">"Break time. Let's go! Time for war!" (Tribalism)</td>
+                                    <td class="table-cell text-right text-green-600 font-bold">YES (CORE)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 bg-green-50">
+                                    <td class="table-cell font-bold text-nba-blue">Halftime</td>
+                                    <td class="table-cell">`Game_Status` = `Halftime`</td>
+                                    <td class="table-cell">Func 2.2 (10-Min Ultimate Hype Battle)</td>
+                                    <td class="table-cell">"This is the final battle! For the team!" (Tribalism)</td>
+                                    <td class="table-cell text-right text-green-600 font-bold">YES (CORE)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="table-cell font-bold">Post-Game</td>
+                                    <td class="table-cell">`Game_Status` = `Final`</td>
+                                    <td class="table-cell">Func 1.1 (Poll: "Vote for MVP")</td>
+                                    <td class="table-cell">"No question, it's Curry." (Final word)</td>
+                                    <td class="table-cell text-right text-nba-red font-bold">No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: The Commercial Loop -->
+        <section class="relative min-h-screen py-24 px-4 bg-gray-900 text-white">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto brightness-0 invert"> </motion.div>
+            <div class="max-w-7xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">The Commercialization Loop</h2>
+                    <p class="text-xl text-gray-400 mt-4 max-w-3xl mx-auto">How we turn free engagement into direct revenue for the team.</p>
+                </motion.div>
+
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Step 1 -->
+                    <motion.div class="p-8 bg-gray-800 rounded-2xl" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.1 }">
+                        <div class="text-6xl text-nba-blue mb-4"><i class="fas fa-ticket-alt"></i></div>
+                        <h3 class="font-heading text-3xl">Step 1: Free-to-Play</h3>
+                        <p class="text-gray-300 mt-2">Fans engage with free content (Polls, Quizzes) to earn non-tradable **"Team Points"**. This builds habit and engagement. Points can be used for prize drawings or free badges.</p>
+                    </motion.div>
+                    <!-- Step 2 -->
+                    <motion.div class="p-8 bg-gray-800 rounded-2xl border-2 border-nba-blue" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.2 }">
+                        <div class="text-6xl text-white mb-4"><i class="fas fa-tshirt"></i></div>
+                        <h3 class="font-heading text-3xl">Step 2: Identity (Revenue 1)</h3>
+                        <p class="text-gray-300 mt-2">Fans spend **real money** to buy **Virtual Goods** (e.g., "$4.99" official team jersey for their Fan AI Avatar) to show their status and identity.</p>
+                    </motion.div>
+                    <!-- Step 3 -->
+                    <motion.div class="p-8 bg-gray-800 rounded-2xl border-2 border-nba-red" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true }" :transition="{ duration: 0.5, delay: 0.3 }">
+                        <div class="text-6xl text-nba-red mb-4"><i class="fas fa-coins"></i></div>
+                        <h3 class="font-heading text-3xl">Step 3: Pay-to-Engage (Revenue 2)</h3>
+                        <p class="text-gray-300 mt-2">Fans spend **real money** to buy consumable **"Team Tokens"** (like TikTok coins) to fuel their team's "Hype Battle" and get their name on the leaderboard.</p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Action Items -->
+        <section class="relative py-24 px-4">
+            <motion.div class="absolute top-8 right-8 opacity-20 print-hidden" :initial="{ opacity: 0 }" :while-in-view="{ opacity: 0.2 }" :viewport="{ once: true, amount: 0.5 }" :transition="{ duration: 1 }"> <img src="image/new logo.png" alt="ALIV Logo" class="h-12 w-auto"> </motion.div>
+             <div class="max-w-3xl mx-auto">
+                <motion.div class="text-center"
+                    :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.8 }" :transition="{ duration: 0.6 }">
+                    <h2 class="font-heading text-5xl md:text-7xl">Action Items</h2>
+                    <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">To proceed, we need to confirm the following:</p>
+                </motion.div>
+
+                <motion.div class="mt-16 space-y-6" :initial="{ opacity: 0, y: 50 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: true, amount: 0.3 }" :transition="{ duration: 0.8 }">
+                    <div class="p-6 border-2 border-nba-red rounded-2xl bg-red-50">
+                        <h3 class="font-heading text-2xl flex items-center"><i class="fas fa-star text-nba-red mr-3"></i>1. Demo Strategy (A or B)</h3>
+                        <p class="text-gray-700 mt-1 pl-10">Confirm which Demo to produce first. **We recommend Scheme B (Team App)** for its compelling story, "wow-factor" sync tech, and easier buy-in from a single team.</p>
+                    </div>
+                    <div class="p-6 border-2 border-gray-100 rounded-2xl">
+                        <h3 class="font-heading text-2xl flex items-center"><i class="fas fa-check-circle text-gray-400 mr-3"></i>2. Mechanism Confirmation</h3>
+                        <p class="text-gray-600 mt-1 pl-10">Confirm the defined Input Streams (Cloud Sync), Trigger Nodes, and Commercialization Loop align with your vision.</p>
+                    </div>
+                    <div class="p-6 border-2 border-gray-100 rounded-2xl">
+                        <h3 class="font-heading text-2xl flex items-center"><i class="fas fa-check-circle text-gray-400 mr-3"></i>3. Visual Style</h3>
+                        <p class="text-gray-600 mt-1 pl-10">Confirm use of the established NBA-style report visuals (Teko font, NBA colors, motion).</p>
+                    </div>
+                    <div class="p-6 border-2 border-gray-100 rounded-2xl">
+                        <h3 class="font-heading text-2xl flex items-center"><i class="fas fa-check-circle text-gray-400 mr-3"></i>4. Demo Teams</h3>
+                        <p class="text-gray-600 mt-1 pl-10">Confirm **"Warriors vs. Lakers"** as the demo matchup.</p>
+                    </div>
+                    <div class="p-6 border-2 border-gray-100 rounded-2xl">
+                        <h3 class="font-heading text-2xl flex items-center"><i class="fas fa-check-circle text-gray-400 mr-3"></i>5. Data Access</h3>
+                        <p class="text-gray-600 mt-1 pl-10">Confirm availability of a real-time NBA data feed (API) for simulating the triggers.</p>
+                    </div>
+                </motion.div>
+             </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 bg-gray-100 text-center">
+            <p class="text-gray-600">ALIV x NBA: The New Court. The New Revenue.</p>
+        </footer>
+    </div>
+    
+    <script type="module">
+        // This script is only to enable Framer Motion directives
+        // It's not a full Vue application.
+        if (window.Vue && window.Motion) {
+            const { createApp, ref } = Vue;
+            const { motion } = window.Motion;
+
+            createApp({
+                directives: { motion },
+                setup() {
+                    // This data is not actively used by this Deck, 
+                    // but is kept to prevent errors if Vue tries to mount.
+                    const finalsData = ref([
+                        { year: 2015, matchup: 'Golden State Warriors 4-2 Cleveland Cavaliers', rating: 11.6, viewers: 19.94 },
+                        { year: 2016, matchup: 'Cleveland Cavaliers 4-3 Golden State Warriors', rating: 11.4, viewers: 20.28 },
+                        { year: 2017, matchup: 'Golden State Warriors 4-1 Cleveland Cavaliers', rating: 11.3, viewers: 20.38 },
+                        { year: 2018, matchup: 'Golden State Warriors 4-0 Cleveland Cavaliers', rating: 10.0, viewers: 17.56 },
+                        { year: 2019, matchup: 'Toronto Raptors 4-2 Golden State Warriors', rating: 8.8, viewers: 15.14 },
+                        { year: 2020, matchup: 'Los Angeles Lakers 4-2 Miami Heat', rating: 4.0, viewers: 7.45 },
+                        { year: 2021, matchup: 'Milwaukee Bucks 4-2 Phoenix Suns', rating: 5.2, viewers: 9.91 },
+                        { year: 2022, matchup: 'Golden State Warriors 4-2 Boston Celtics', rating: 6.6, viewers: 12.40 },
+                        { year: 2023, matchup: 'Denver Nuggets 4-1 Miami Heat', rating: 6.1, viewers: 11.64 },
+                        { year: 2024, matchup: 'Boston Celtics 4-1 Dallas Mavericks', rating: 5.8, viewers: 11.31 },
+                    ]);
+
+                    return { finalsData };
+                }
+            }).mount('#app');
+        } else {
+             if (!window.Vue) console.error('Vue is not loaded');
+             if (!window.Motion) console.error('Framer Motion is not loaded');
+        }
+    </script>
+     
+
+</body>
+</html>
